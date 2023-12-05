@@ -1,6 +1,6 @@
 # White Border Open Source Alternative
 
-    A Flutter based open source app build as an alternative to [White Border](https://play.google.com/store/apps/details?id=com.vector123.whiteborder&hl=en&gl=US)
+A Flutter based open source app build as an alternative to [White Border](https://play.google.com/store/apps/details?id=com.vector123.whiteborder&hl=en&gl=US)
 
 
 ## Getting Started
