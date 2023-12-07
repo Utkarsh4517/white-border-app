@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:white_border/features/home/ui/home_screen.dart';
 import 'package:white_border/features/settings/ui/settings_screen.dart';
 import 'package:white_border/features/export/ui/export_screen.dart';
+
 class NavigationScreen extends StatefulWidget {
   const NavigationScreen({super.key});
 
@@ -18,12 +19,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
     });
   }
 
-  List _pages = [
-
-HomeScreen(),
-SettingsScreen(),
-ExportScreen(),
-];  @override
+  final List _pages = const [
+    HomeScreen(),
+    SettingsScreen(),
+    ExportScreen(),
+  ];
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedTab],
@@ -33,9 +34,9 @@ ExportScreen(),
           _changeTab(index);
         },
         items: const [
-BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-BottomNavigationBarItem(icon: Icon(Icons.home), label: 'settings'),
-BottomNavigationBarItem(icon: Icon(Icons.home), label: 'export'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'settings'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'export'),
         ],
       ),
     );

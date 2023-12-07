@@ -5,6 +5,7 @@ import 'package:white_border/features/onBoarding/ui/on_boarding_screen.dart';
 import 'package:white_border/shared/nav_bar.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
   runApp(ProviderScope(child: MyApp(hasSeenOnboarding: hasSeenOnboarding)));
@@ -28,4 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
