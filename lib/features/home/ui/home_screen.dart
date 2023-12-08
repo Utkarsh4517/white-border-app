@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           case ImageSelectedState:
-          final successState =  state as ImageSelectedState;
+            final successState = state as ImageSelectedState;
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: const Color(0xfffffff0),
@@ -94,12 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-                                var record = await ImageHandler.pickImage(
-                                    canvasWidth: canvasWidth);
-                                setState(() {
-                                  _image = record!.$1;
-                                  imageScale = record.$2;
-                                });
+                                homeBloc.add(ImageSelectedEvent(
+                                    canvasWidth: canvasWidth));
                               },
                               child: const Text('Select Image'),
                             ),

@@ -17,3 +17,4 @@ class ImageSelectedState extends HomeState {
     required this.imageScale,
   });
 }
+
