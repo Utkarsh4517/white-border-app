@@ -18,12 +18,12 @@ class CustomCanvas extends StatelessWidget {
     required this.imageScale,
     required this.canvasWidth,
     required this.canvasHeight,
-    this.displayScale = 0.25, // Adjust this value as needed
+    this.displayScale = 0.2, // Adjust this value as needed
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double imageScale = 1.0;
+    double imageScale = 0.8;
     return LayoutBuilder(
       builder: (context, constraints) {
         double adjustedDisplayScale = displayScale;
