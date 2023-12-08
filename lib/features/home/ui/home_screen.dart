@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:button_animations/button_animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:white_border/constants/dimensions.dart';
 import 'package:white_border/features/home/bloc/home_bloc.dart';
 import 'package:white_border/features/home/repo/image_handler.dart';
 import 'package:white_border/features/home/widgets/custom_canvas.dart';
+import 'package:white_border/features/home/widgets/round_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,7 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
       bloc: homeBloc,
       listenWhen: (previous, current) => current is HomeActionState,
       buildWhen: (previous, current) => current is! HomeActionState,
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is RatioChangedState) {
+          setState(() {
+            canvasWidth = state.canvasWidth;
+            canvasHeight = state.canvasHeight;
+          });
+        }
+      },
       builder: (context, state) {
         switch (state.runtimeType) {
           case NoImageSelectedState:
@@ -55,6 +64,20 @@ class _HomeScreenState extends State<HomeScreen> {
             final successState = state as ImageSelectedState;
             return Scaffold(
               appBar: AppBar(
+                title: const Text('OS White-Board'),
+                actions: [
+                  Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      child: IconButton(
+                          onPressed: () {
+                            ImageHandler.exportImage(
+                                imageFile: successState.image,
+                                canvasWidth: canvasWidth,
+                                canvasHeight: canvasHeight);
+                          },
+                          icon: const Icon(Icons.download)))
+                ],
+                centerTitle: true,
                 backgroundColor: const Color(0xfffffff0),
               ),
               backgroundColor: const Color(0xfffffff0),
@@ -87,9 +110,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                _buildRatioButton('1:1', 4000, 4000),
-                                _buildRatioButton('4:5', 4320, 5400),
-                                _buildRatioButton('16:9', 7680, 4320),
+                                GestureDetector(
+                                  onTapDown: (_) {
+                                    homeBloc.add(RatioButtonClickedEvent(
+                                        canvasWidth: 4000, canvasHeight: 4000));
+                                  },
+                                  child: const RoundButton(
+                                      height: 4000, width: 4000, label: '1.1'),
+                                ),
+                                GestureDetector(
+                                  onTapDown: (_) {
+                                    homeBloc.add(RatioButtonClickedEvent(
+                                        canvasWidth: 4320, canvasHeight: 5400));
+                                  },
+                                  child: const RoundButton(
+                                      height: 4320, width: 5400, label: '4:5'),
+                                ),
+                                GestureDetector(
+                                  onTapDown: (_) {
+                                    homeBloc.add(RatioButtonClickedEvent(
+                                        canvasWidth: 7680, canvasHeight: 4320));
+                                  },
+                                  child: const RoundButton(
+                                      height: 7680, width: 4320, label: '16:9'),
+                                ),
                               ],
                             ),
                             ElevatedButton(
@@ -98,16 +142,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     canvasWidth: canvasWidth));
                               },
                               child: const Text('Select Image'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                ImageHandler.exportImage(
-                                  imageFile: _image!,
-                                  canvasWidth: canvasWidth,
-                                  canvasHeight: canvasHeight,
-                                );
-                              },
-                              child: const Text('Export Image'),
                             ),
                           ],
                         ),
@@ -125,19 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
         }
       },
-    );
-  }
-
-  Widget _buildRatioButton(String label, double width, double height) {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          // Update the canvas size based on the aspect ratio and image scale
-          canvasWidth = width;
-          canvasHeight = height;
-        });
-      },
-      child: Text(label),
     );
   }
 }

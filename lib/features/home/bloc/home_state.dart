@@ -18,3 +18,11 @@ class ImageSelectedState extends HomeState {
   });
 }
 
+class RatioChangedState extends HomeActionState {
+  final double canvasWidth;
+  final double canvasHeight;
+  RatioChangedState({
+    required this.canvasWidth,
+    required this.canvasHeight,
+  });
+}

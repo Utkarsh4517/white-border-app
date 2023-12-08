@@ -13,4 +13,11 @@ class ImageSelectedEvent extends HomeEvent {
   });
 }
 
-
+class RatioButtonClickedEvent extends HomeEvent {
+  final double canvasWidth;
+  final double canvasHeight;
+  RatioButtonClickedEvent({
+    required this.canvasWidth,
+    required this.canvasHeight,
+  });
+}
